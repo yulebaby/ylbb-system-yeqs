@@ -15,7 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
 import { UserInfoResolver } from './core/userInfo-resolver.service';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, DatePipe } from '@angular/common';
 import { HomeComponent } from './base/home/home.component';
 import { AddapointComponent } from './base/home/addapoint/addapoint.component';
 import { AppointDetailComponent } from './base/home/appoint-detail/appoint-detail.component';
@@ -49,6 +49,7 @@ import { ConsumptionComponent } from './base/home/appoint-detail/consumption/con
   ],
   providers: [
     UserInfoResolver,
+    DatePipe,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent]

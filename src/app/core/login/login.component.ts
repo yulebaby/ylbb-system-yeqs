@@ -24,8 +24,6 @@ export class LoginComponent implements OnInit {
 
   loginError   : string = '';
 
-  private baseRouter: RouterState;
-
 
   constructor(
     private http       : HttpClient,
@@ -35,7 +33,6 @@ export class LoginComponent implements OnInit {
     private store      : Store<AppState>,
     private modal      : NzModalService
   ) {
-    this.store.select('routerState').subscribe( res => this.baseRouter = res);
   }
 
   ngOnInit() {
@@ -104,7 +101,7 @@ export class LoginComponent implements OnInit {
         if (params.remember && !authCode) {
           window.localStorage.setItem('username', JSON.stringify(this.loginForm.value));
         }
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/home/index');
       } else {
         this.loginError = res.info;
       }

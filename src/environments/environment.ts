@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   version: '0.0.0',
   domainWs: '',
-  //domain: 'http://terp.yuerqinshui.com'
-  domain: 'http://39.107.232.95:6056/new_bss'
+  domain: 'http://terp.yuerqinshui.com'
+  // domain: 'http://39.107.232.95:6056/new_bss'
   //domain: 'http://192.168.1.207:8080'
 };
 
