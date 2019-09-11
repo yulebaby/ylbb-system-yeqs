@@ -109,6 +109,10 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
       this.teacherList = res.result;
       this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
       this.singleTimeGroup.patchValue({ swimTeacherId: res.result[0].id });
+      this.timesCountGroup.patchValue({ showerTeacherId: res.result[0].id });
+      this.timesCountGroup.patchValue({ fitnessTeacherId: res.result[0].id });
+      this.singleTimeGroup.patchValue({ showerTeacherId: res.result[0].id });
+      this.singleTimeGroup.patchValue({ fitnessTeacherId: res.result[0].id });
     });
     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);

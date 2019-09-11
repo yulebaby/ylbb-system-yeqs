@@ -99,7 +99,6 @@ export class ListComponent implements OnInit {
   requestDataLength: number = 0;
   routingPath: string;
   ngOnInit() {
-    console.log(this.routerinfo)
     this.routingPath = this.routerinfo['_routerState'].snapshot.url;
     setTimeout(() => {
       this.listPage.eaQuery._queryForm.get('appointmentDate').valueChanges.subscribe(res => {

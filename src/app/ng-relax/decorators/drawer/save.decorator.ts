@@ -25,6 +25,7 @@ export function DrawerSave(requestPath) {
         }, true).then(res => {
           this.saveLoading = false;
           this.drawerRef.close(true);
+          console.log(123);
         }).catch(err => this.saveLoading = false);
       }
     }

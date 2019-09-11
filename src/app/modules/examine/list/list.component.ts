@@ -18,14 +18,14 @@ export class ListComponent implements AfterViewInit {
     {
       label: '时间',
       type: 'datepicker',
-      key: 'startTime'
+      key: 'createTime'
     },
     {
       label: '教练',
       type: 'select',
       key: 'employeeId',
-      optionKey: { label: 'employeeName', value: 'employeeId' },
-      optionsUrl: '/scheduling/selectSchedulingAll'
+      optionKey: { label: 'name', value: 'id' },
+      optionsUrl: '/member/getStoreTeachers'
     },
 
     {
@@ -37,11 +37,12 @@ export class ListComponent implements AfterViewInit {
   ]
 
   loading: boolean;
-
+  pageNum : number = 1;
+  totalPage: number;
   dataSet: any[] = [];
 
   checkAuth: number;
-
+  selectValue :number;
   constructor(
     private http: HttpService,
     private message: NzMessageService
@@ -68,26 +69,33 @@ export class ListComponent implements AfterViewInit {
 
 
 
-  queryParams: any = {
-    pageNo: 1,
-    totalCount: 0
-  };
+  queryParams: any = {};
   loadData(pi: number): void {
-    this.queryParams.pageNo = pi;
+    this.pageNum = pi;
     this.query();
   }
   querySubmit(params) {
-    this.queryParams = Object.assign({ pageNo: 1, totalCount: this.queryParams.totalCount }, params);
+    this.queryParams = params;
+    this.pageNum = 1;
     this.query();
   }
   query() {
-    return false;
+    this.selectValue = null;
     this.loading = true;
-    this.http.post('/memberGrowthRecord/list', { paramJson: JSON.stringify(Object.assign(this.queryParams, { auditStatus: 1})) }, false).then(res => {
+    this.http.post('/memberGrowthRecord/list', { paramJson: JSON.stringify(Object.assign(this.queryParams)), pageNum: this.pageNum, pageSize:10 }, false).then(res => {
       this.loading = false;
       //this.checkAuth = res.data.checkAuth;
-      this.queryParams.totalCount = res.data.totalCount;
-      res.data.list.map(item => {
+      this.totalPage = res.result.totalPage;
+      res.result.list.map(item => {
+        if(item.type == 0){
+          item.eventIcon = 'https://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/assessment/cl1.png';
+        }else if(item.type == 1){ 
+          item.eventIcon = 'https://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/assessment/cl2.png';
+        }else if(item.type == 2){ 
+          item.eventIcon = 'https://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/assessment/cl3.png';
+        }else if(item.type == 4){ 
+          item.eventIcon = 'https://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/assessment/cl4.png';
+        }
         try {
           item.appContent = JSON.parse(item.appContent);
           item.appContent.content = item.appContent.content.split('|~!|').join('<i>|</i>');
@@ -96,7 +104,7 @@ export class ListComponent implements AfterViewInit {
         }
         return item;
       });
-      this.dataSet = res.data.list;
+      this.dataSet = res.result.list;
     })
   }
 
@@ -105,7 +113,6 @@ export class ListComponent implements AfterViewInit {
   showExamine: boolean;
   operExamine() {
     this.showExamine = true;
-    this.dataSet.map(res => res.checked = false);
   }
 
 
@@ -113,19 +120,21 @@ export class ListComponent implements AfterViewInit {
     window.open(url)
   }
 
-  batchStatus(auditStatus) {
-    let ids = [];
-    this.dataSet.map(res => res.checked && ids.push(res.id));
-    if (ids.length) {
+  batchStatus(status) {
+    if (this.selectValue) {
       this.http.post('/memberGrowthRecord/modify', {
         paramJson: JSON.stringify({
-          ids: ids.join(','),
-          deleteOrUpdate: '1',
-          auditStatus
+          id: this.selectValue,
+          status
         })
       }).then(res => {
-        this.showExamine = false;
-        this.query();
+        if(res.code == 1000){
+          this.showExamine = false;
+          this.query();
+        }else{
+          this.message.warning(res.info);
+        }
+
       });
     } else {
       this.message.warning('请选择需要审核的数据');

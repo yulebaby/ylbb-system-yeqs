@@ -11,47 +11,54 @@
   </div>
 
 </div>
+
 <div class="content">
-  <nz-list [nzDataSource]="dataSet" nzItemLayout="horizontal" [nzLoading]="loading" [nzPagination]="pagination"
-    [nzRenderItem]="item">
-    <ng-template #item let-item>
-      <nz-list-item *ngIf="!showExamine || (showExamine && item.auditStatus == 1)" [nzActions]="[editAction]">
-        <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzTitle]="false" [nzLoading]="item.loading">
-          <ng-template #editAction>
-            <ng-container *ngIf="showExamine">
-              <label nz-checkbox [(ngModel)]="item.checked"></label>
-            </ng-container>
-          </ng-template>
-          <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="item.eventIcon" [nzDescription]="item.showTime">
-            <ng-template #nzTitle>
-              <h2>
-                {{ item.eventName }}
-                <b [ngClass]="['status', 's' + item.auditStatus]">
-                  （{{ item.auditStatus == 0 ? '无需审核' : item.auditStatus == 1 ? '未审核' : item.auditStatus == 2 ? '审核通过' : '审核未通过' }}）
-                </b>
-                <span class="name">{{ item.teacherName }} 为 {{ item.studentName }} 添加</span>
-              </h2>
-              <span class="contentI" [innerHTML]="item.appContent?.content"></span>
-              <div *ngIf="item.appContent.videoUrl"><a (click)="previewUrl(item.appContent.videoUrl)">点击查看视频</a></div>
-              <div *ngIf="item.appContent.imgUrlList">
-                <ng-container *ngFor="let item of item.appContent.imgUrlList">
-                  <a (click)="previewUrl(item)">
-                    <nz-avatar style="margin-right: 12px;" nzIcon="user" nzSize="large" nzShape="square" [nzSrc]="item">
-                    </nz-avatar>
-                  </a>
-                </ng-container>
-              </div>
+  <nz-radio-group [(ngModel)]="selectValue" style="width:100%;">
+    <nz-list [nzDataSource]="dataSet" nzItemLayout="horizontal" [nzLoading]="loading" [nzPagination]="pagination"
+      [nzRenderItem]="item">
+      <ng-template #item let-item>
+        <nz-list-item *ngIf="!showExamine || (showExamine )" [nzActions]="[editAction]">
+          <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzTitle]="false" [nzLoading]="item.loading">
+            <ng-template #editAction>
+              <ng-container *ngIf="showExamine">
+                <label nz-radio [nzDisabled]="item.status != 0"  [nzValue]="item.id"></label>
+              </ng-container>
             </ng-template>
-          </nz-list-item-meta>
-        </nz-skeleton>
-      </nz-list-item>
-    </ng-template>
-    <ng-template #pagination>
-      <nz-pagination [nzPageIndex]="queryParams.pageNo" [nzTotal]="queryParams.totalCount" [nzShowTotal]="rangeTemplate"
-        (nzPageIndexChange)="loadData($event)"></nz-pagination>
-      <ng-template #rangeTemplate let-range="range" let-total>
-        当前：{{ range[0] }}-{{ range[1] }} 共 {{ total }} 条
+            <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="item.eventIcon" [nzDescription]="item.showTime">
+              <ng-template #nzTitle>
+                <h2>
+                  {{ item.curriculumInfo }}
+                  <b [ngClass]="['status', 's' + item.status]">
+                    （{{ item.status == 0 ? '未审核' : item.status == 1 ? '审核通过' : item.status == 2 ? '审核未通过' : '--' }}）
+                  </b>
+                  <span class="name">{{ item.employeeName ? item.employeeName : '系统' }} 为 {{ item.memberName }}
+                    添加</span>
+                </h2>
+                <span class="contentI" *ngIf="item.type == 0">身高：{{ item.height }}cm  ----  体重：{{ item.weight }}kg</span>
+                <div *ngIf="item.imgUrls&&item.type == 1"><a (click)="previewUrl(item.imgUrls[0])">点击查看视频</a></div>
+                <div *ngIf="item.imgUrls&&item.type == 2">
+                  <ng-container *ngFor="let item of item.imgUrls">
+                    <a (click)="previewUrl(item)">
+                      <nz-avatar style="margin-right: 12px;" nzIcon="user" nzSize="large" nzShape="square" [nzSrc]="item">
+                      </nz-avatar>
+                    </a>
+                  </ng-container>
+                </div>
+                <div class="creat_time">
+                    {{ item.createTime }}
+                </div>
+              </ng-template>
+            </nz-list-item-meta>
+          </nz-skeleton>
+        </nz-list-item>
       </ng-template>
-    </ng-template>
-  </nz-list>
+      <ng-template #pagination>
+        <nz-pagination [nzPageIndex]="pageNum" [nzTotal]="totalPage"
+          [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadData($event)"></nz-pagination>
+        <ng-template #rangeTemplate let-range="range" let-total>
+          共 {{ total }} 条
+        </ng-template>
+      </ng-template>
+    </nz-list>
+  </nz-radio-group>
 </div>

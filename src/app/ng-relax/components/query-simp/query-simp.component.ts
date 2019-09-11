@@ -35,6 +35,7 @@ export class QuerySimpComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this._queryForm = new FormGroup({});
     this.node.map((res: any, idx) => {
       if (res.isHide) { this._showSlideBtn = true; }
@@ -48,12 +49,12 @@ export class QuerySimpComponent implements OnInit {
         res.optionKey = res.optionKey || { label: 'name', value: 'id' };
         if (res.optionsUrl && res.noCache) {
           this.http.post<any>(res.optionsUrl, {}).subscribe(result => {
-            res.options = (res.options || []).concat(result.result.list || result.result);
+            res.options = (res.options || []).concat(result.result || result);
             res.optionsResult && res.optionsResult(res.options);
           })
         } else if (res.optionsUrl) {
           this.cache.get(res.optionsUrl).subscribe(result => {
-            res.options = (res.options || []).concat(result);
+            res.options = (res.options || []).concat(result.result || result);
             res.optionsResult && res.optionsResult(res.options);
           })
         }

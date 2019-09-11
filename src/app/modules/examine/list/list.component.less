@@ -8,11 +8,12 @@
 }
 .popover-content {
   border-right: 0;
-  .ant-menu-item {
-    height: 32px !important;
-    line-height: 32px !important;
-    margin-bottom: 0 !important;
-  }
+
+}
+.popover-content .ant-menu-item {
+  height: 32px !important;
+  line-height: 32px !important;
+  margin-bottom: 0 !important;
 }
 ea-query-simp {
   display: inline-block;
@@ -29,21 +30,31 @@ nz-list-item.active {
 .status {
   margin-right: 12px;
   font-size: 12px;
-  &.s0 {
-    color: #607D8B;
-  }
-  &.s1 {
-    color: #2196f3;
-  }
-  &.s2 {
-    color: #4caf50;
-  }
-  &.s3 {
-    color: #e91e63;
-  }
-
 }
 .name {
   color: #999;
   font-size: 12px;
+}
+.status.s0{
+  color: #607D8B;
+}
+.status.s1{
+  color: #2196f3;
+}
+.status.s2{
+  color: #4caf50;
+}
+.status.s3{
+  color: #e91e63;
+}
+ant-list-item-meta {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  font-size: 0;
+}
+.creat_time{
+  color: #ccc;
+  font-size: 12px;
+  margin-top: 10px;
 }

@@ -24,7 +24,6 @@ export class QueryComponent implements OnInit {
   }
 
   @Input() node: QueryNode[] = [];
-  @Input('node') _node: QueryNode[] = [];
 
   @Output() onSubmit: EventEmitter<object> = new EventEmitter();
 
@@ -42,8 +41,6 @@ export class QueryComponent implements OnInit {
 
   ngOnInit() {
     this._queryForm = new FormGroup({});
-    
-    if (this.node.length) {
       this.node.map((res: any, idx) => {
         if (res.isHide) { this._showSlideBtn = true; }
         if (res.type === 'between') {
@@ -56,45 +53,20 @@ export class QueryComponent implements OnInit {
           res.optionKey = res.optionKey || { label: 'name', value: 'id' };
           if (res.optionsUrl && res.noCache) {
             this.http.post<any>(res.optionsUrl, {}).subscribe(result => {
-              res.options = (res.options || []).concat(result.result.list || result.result);
+              res.options = (res.options || []).concat(result.result || result);
               res.optionsResult && res.optionsResult(res.options);
             })
           } else if (res.optionsUrl) {
             this.cache.get(res.optionsUrl).subscribe(result => {
-              res.options = (res.options || []).concat(result);
+
+              res.options = (res.options || []).concat( result.result || result);
               res.optionsResult && res.optionsResult(res.options);
             })
           }
         }
         return res;
       });
-    } else {
-      this._node.map((res: any, idx) => {
-        if (res.isHide) { this._showSlideBtn = true; }
-        if (res.type === 'between') {
-          this._queryForm.addControl(res.valueKey[0], new FormControl(res.default ? res.default[0] : null));
-          this._queryForm.addControl(res.valueKey[1], new FormControl(res.default ? res.default[1] : null));
-        } else {
-          this._queryForm.addControl(res.key, new FormControl(typeof res.default !== 'undefined' ? res.default : null));
-        }
-        if (res.type === 'select' || res.type === 'radio') {
-          res.optionKey = res.optionKey || { label: 'name', value: 'id' };
-          if (res.optionsUrl && res.noCache) {
-            this.http.post<any>(res.optionsUrl, {}).subscribe(result => {
-              
-              res.options = (res.options || []).concat(result.result.list || result.result);
-              res.optionsResult && res.optionsResult(res.options);
-            })
-          } else if (res.optionsUrl) {
-            this.cache.get(res.optionsUrl).subscribe(result => {
-              res.options = (res.options || []).concat(result);
-              res.optionsResult && res.optionsResult(res.options);
-            })
-          }
-        }
-        return res;
-      });
-    }
+    
   }
 
   /* --------------- 重置 --------------- */
@@ -111,7 +83,6 @@ export class QueryComponent implements OnInit {
   /* --------------- 提交 --------------- */
   _submit(): void {
     let queryForm = this._queryForm.value;
-    if (this.node.length) {
       this.node.map((res: any) => {
         if (res.type === 'datepicker') {
           if (queryForm[res.key]) {
@@ -140,36 +111,7 @@ export class QueryComponent implements OnInit {
           delete queryForm[res.key];
         }
       });
-    } else {
-      this._node.map((res: any) => {
-        if (res.type === 'datepicker') {
-          if (queryForm[res.key]) {
-            queryForm[res.key] = this.datePipe.transform(queryForm[res.key].getTime(), 'yyyy-MM-dd');
-          }
-        }
-        if (res.type === 'monthpicker') {
-          if (queryForm[res.key]) {
-            queryForm[res.key] = this.datePipe.transform(queryForm[res.key], 'yyyy-MM');
-          }
-        }
-        if (res.valueKey) {
-          if (res.type === 'rangepicker') {
-            if (queryForm[res.key] && queryForm[res.key][0]) {
-              queryForm[res.valueKey[0]] = this.datePipe.transform(queryForm[res.key][0].getTime(), 'yyyy-MM-dd');
-              queryForm[res.valueKey[1]] = this.datePipe.transform(queryForm[res.key][1].getTime(), 'yyyy-MM-dd');
-            }
-            delete queryForm[res.key];
-          }
-          if (res.type === 'between') {
-            if (!queryForm[res.valueKey[0]]) delete queryForm[res.valueKey[0]];
-            if (!queryForm[res.valueKey[1]]) delete queryForm[res.valueKey[1]];
-          }
-        }
-        if (queryForm[res.key] === '' || queryForm[res.key] === null || queryForm[res.key] === undefined) {
-          delete queryForm[res.key];
-        }
-      })
-    }
+    
 
 
     this.onSubmit.emit(queryForm);

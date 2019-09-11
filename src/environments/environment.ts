@@ -8,9 +8,9 @@ export const environment = {
   version: '0.0.1',
   //domain: 'http://terp.yuerqinshui.com',
   domain: 'http://39.107.232.95:6056/new_bss',
-  domainPay: 'https://tpay.beibeiyue.com/pay',
-  domainOss: 'https://oss.beibeiyue.com',
-  domainEs: 'http://es.beibeiyue.com'
+  domainPay: 'https://tpay.haochengzhang.com/pay',
+  domainOss: 'https://oss.haochengzhang.com',
+  domainEs: 'http://es.haochengzhang.com'
 };
 
 /*

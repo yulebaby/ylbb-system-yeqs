@@ -89,7 +89,14 @@ export class ConsumptionsComponents implements OnInit {
       this.singleTimeGroup.patchValue({ consumeDate: res.result });
     });
 
-    this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+    this.http.post('/member/getStoreTeachers', {}, false).then(res => {
+      this.teacherList = res.result;
+      this.timesCountGroup.patchValue({ showerTeacherId: res.result[0].id });
+      this.timesCountGroup.patchValue({ fitnessTeacherId: res.result[0].id });
+      this.singleTimeGroup.patchValue({ showerTeacherId: res.result[0].id });
+      this.singleTimeGroup.patchValue({ fitnessTeacherId: res.result[0].id });
+
+    });
     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
     this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {

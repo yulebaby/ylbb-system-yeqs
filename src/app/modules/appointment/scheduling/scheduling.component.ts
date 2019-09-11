@@ -1,7 +1,7 @@
 import { NzModalService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit, ViewChild  } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling.component.html',
@@ -13,10 +13,14 @@ export class SchedulingComponent implements OnInit {
     list: [],
     date: []
   };
+  baseFormGroup: FormGroup;
+  showDrawer: boolean = false;
+  saveLoading: boolean = false;
   scheduleStatus;
 
   constructor(
     private http: HttpService,
+    private fb: FormBuilder = new FormBuilder(),
     private modal: NzModalService
   ) {
     this.getData();
@@ -31,20 +35,53 @@ export class SchedulingComponent implements OnInit {
     });
   }
   setHoliday(date){
-    console.log(date);
-    return false;
     this.dayLoading = true;
-    this.http.post('/schedulingWaterConfig/setHoliday', { date }).then(res => {
-
+    this.http.post('/schedulingWaterConfig/setHoliday', { date },true).then(res => {
+      if(res.code == 1000){
+        this.getData();
+      }
     });
   }
+  nzOnCancels(){
+  
+  }
   ngOnInit() {
+    this.baseFormGroup = this.fb.group({
+      id: [],
+      showerCount: [ ,[Validators.required]],
+      receptionCount : [ ,[Validators.required]],
+      restDay: [ ,[Validators.required]],
+    });
   }
   
-  save() {
-    this.http.post('/teacherDayConfig/save', { paramJson: JSON.stringify({ list: this.dayList['list'] }) }, true);
+  showSave(){
+    this.showDrawer = true;
+    this.http.post('/schedulingWaterConfig/getDucators', {}, false).then(res=>{
+      this.baseFormGroup.patchValue(res.result);
+    });
   }
 
+  save() {
+    if (this.baseFormGroup.invalid) {
+      for (let i in this.baseFormGroup.controls) {
+        this.baseFormGroup.controls[i].markAsDirty();
+        this.baseFormGroup.controls[i].updateValueAndValidity();
+      }
+    }else{
+      this.saveLoading = true;
+    this.http.post('/schedulingWaterConfig/modifyDucators', { paramJson: JSON.stringify(this.baseFormGroup.value)}, true).then(res=>{
+      this.saveLoading = false;
+        this.getData();
+        this.showDrawer = false;
+    });
+
+    }
+  }
+
+  resetList(){
+    
+    this.http.post('/schedulingWaterConfig/restart', {  }, true).then(res => this.getData());
+  }
 
   @ViewChild('tplContent') tplContent;
   getHourLoading: boolean;

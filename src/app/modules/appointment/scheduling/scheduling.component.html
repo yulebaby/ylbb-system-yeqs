@@ -1,69 +1,124 @@
 <div class="container">
     <nz-card [nzBordered]="false" nzTitle="水育师按月排班表" [nzExtra]="extraTemplate1" [nzLoading]="dayLoading">
         <ng-template #extraTemplate1>
-          <button nz-button nzType="primary" (click)="save()">保存排班数据</button>
+            <button nz-button nzType="primary" (click)="showSave()">工作设置</button>
+            <button nz-button nzType="primary" style="margin-left:15px;" (click)="resetList()">重新生成并开始</button>
+
         </ng-template>
-      
+
         <nz-table [nzData]="dayList['list']" [nzShowPagination]="false">
-          <thead>
-            <tr>
-              <th>水育师</th>
-              <th *ngFor="let th of dayList['titles']">
-                {{ th.date }}<br>{{ th.week }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of dayList['list']">
-              <td>{{ data.key }}</td>
-              <td>{{ data.value.day0 == 1 ? '洗澡' : data.value.day0 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day1 == 1 ? '洗澡' : data.value.day1 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day2 == 1 ? '洗澡' : data.value.day2 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day3 == 1 ? '洗澡' : data.value.day3 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day4 == 1 ? '洗澡' : data.value.day4 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day5 == 1 ? '洗澡' : data.value.day5 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day6 == 1 ? '洗澡' : data.value.day6 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day7 == 1 ? '洗澡' : data.value.day7 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day8 == 1 ? '洗澡' : data.value.day8 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day9 == 1 ? '洗澡' : data.value.day9 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day10 == 1 ? '洗澡' : data.value.day10 == 2 ? '接待' : '放假'	 }}</td>
-              <td>{{ data.value.day11 == 1 ? '洗澡' : data.value.day11 == 2 ? '接待' : '放假'	 }}</td>
-            </tr>
-            <tr>    
-                <td></td>
-                <td *ngFor="let data of dayList['titles']">
-                    <!-- <button
-                    nz-popconfirm
-                    nzPopconfirmTitle="Are you sure delete this task?"
-                    (nzOnConfirm)="setHoliday(data.date)"
-                    (nzOnCancel)="setHoliday(data.date)"
-                    nzPopconfirmPlacement="topLeft"
-                    nz-button
-                    nzType="primary"
-                  >
-                    放假</button> -->
-                    <a
-                    nz-popconfirm
-                    nzPopconfirmTitle="Are you sure delete this task?"
-                    nzPopconfirmPlacement="bottom"
-                    (nzOnConfirm)="setHoliday(data.date)"
-                    (nzOnCancel)="setHoliday(data.date)"
-                    >Delete</a>
-                </td>
-            </tr>
-          </tbody>
+            <thead>
+                <tr>
+                    <th>水育师</th>
+                    <th *ngFor="let th of dayList['titles']">
+                        {{ th.date }}<br>{{ th.week }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dayList['list']">
+                    <td>{{ data.key }}</td>
+                    <td>{{ data.value.day0 == 1 ? '洗澡' : data.value.day0 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day1 == 1 ? '洗澡' : data.value.day1 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day2 == 1 ? '洗澡' : data.value.day2 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day3 == 1 ? '洗澡' : data.value.day3 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day4 == 1 ? '洗澡' : data.value.day4 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day5 == 1 ? '洗澡' : data.value.day5 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day6 == 1 ? '洗澡' : data.value.day6 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day7 == 1 ? '洗澡' : data.value.day7 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day8 == 1 ? '洗澡' : data.value.day8 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day9 == 1 ? '洗澡' : data.value.day9 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day10 == 1 ? '洗澡' : data.value.day10 == 2 ? '接待' : '放假'	 }}</td>
+                    <td>{{ data.value.day11 == 1 ? '洗澡' : data.value.day11 == 2 ? '接待' : '放假'	 }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td *ngFor="let data of dayList['titles']">
+                        <button nz-popconfirm nzTitle="确认操作?" (nzOnConfirm)="setHoliday(data.date)"
+                            (nzOnCancel)="nzOnCancels()" nzPopconfirmPlacement="topLeft" nz-button
+                            nzType="primary">
+                            放假</button>
+
+                    </td>
+                </tr>
+            </tbody>
         </nz-table>
-      </nz-card>
-      
-      <ng-template #tplContent>
+    </nz-card>
+
+    <ng-template #tplContent>
         <nz-spin [nzSpinning]="getHourLoading">
-          <label nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()" [nzIndeterminate]="indeterminate">全选</label>
-          <nz-divider></nz-divider>
-          <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="teacherHourChecked()">
-            <div *ngFor="let label of teacherHourList" [style.margin-bottom]="'8px'">
-              <label nz-checkbox [nzValue]="label.value" [(ngModel)]="label.checked">{{ label.value }}</label>
-            </div>
-          </nz-checkbox-wrapper>
+            <label nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()"
+                [nzIndeterminate]="indeterminate">全选</label>
+            <nz-divider></nz-divider>
+            <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="teacherHourChecked()">
+                <div *ngFor="let label of teacherHourList" [style.margin-bottom]="'8px'">
+                    <label nz-checkbox [nzValue]="label.value" [(ngModel)]="label.checked">{{ label.value }}</label>
+                </div>
+            </nz-checkbox-wrapper>
         </nz-spin>
-      </ng-template>
+    </ng-template>
+
+    <nz-drawer 
+    [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+    [nzWidth]="720" 
+    [nzVisible]="showDrawer" 
+    nzTitle="工作设置" 
+    (nzOnClose)="showDrawer = false">
+    <form nz-form [formGroup]="baseFormGroup">
+            <div nz-row nzGutter="8">
+                <div nz-col nzSpan="12">
+                    <nz-form-item>
+                      <nz-form-label nzRequired>洗澡</nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group  nzAddOnAfter="人">
+                            <input type="number" nz-input formControlName="showerCount" nzPlaceHolder="请输入洗澡人数" />
+                          </nz-input-group>
+                        <nz-form-explain *ngIf="baseFormGroup.get('showerCount').dirty && baseFormGroup.get('showerCount').hasError('required')">请输入洗澡人数！</nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col nzSpan="12">
+                        <nz-form-item>
+                          <nz-form-label nzRequired>接待</nz-form-label>
+                          <nz-form-control>
+                            <nz-input-group  nzAddOnAfter="人">
+                                <input type="number" nz-input formControlName="receptionCount" nzPlaceHolder="请输入接待人数" />
+                              </nz-input-group>
+                            <nz-form-explain *ngIf="baseFormGroup.get('receptionCount').dirty && baseFormGroup.get('receptionCount').hasError('required')">请输入接待人数！</nz-form-explain>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+            </div>
+            
+            
+            <div nz-row nzGutter="8">
+    
+                <div nz-col nzSpan="12">
+                  <nz-form-item>
+                    <nz-form-label nzRequired>哪天休息</nz-form-label>
+                    <nz-form-control>
+                      <nz-select formControlName="restDay" [nzAllowClear]="true" nzPlaceHolder="请选择哪天休息">
+                        <nz-option  nzLabel="星期一" [nzValue]="1"></nz-option>
+                        <nz-option  nzLabel="星期二" [nzValue]="2"></nz-option>
+                        <nz-option  nzLabel="星期三" [nzValue]="3"></nz-option>
+                        <nz-option  nzLabel="星期四" [nzValue]="4"></nz-option>
+                        <nz-option  nzLabel="星期五" [nzValue]="5"></nz-option>
+                        <nz-option  nzLabel="星期六" [nzValue]="6"></nz-option>
+                        <nz-option  nzLabel="星期日" [nzValue]="0"></nz-option>
+                      </nz-select>
+                      <nz-form-explain *ngIf="baseFormGroup.get('restDay').dirty && baseFormGroup.get('restDay').hasError('required')">请选择哪天休息！</nz-form-explain>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+    
+
+    
+              </div> 
+              <div class="footer" >
+                  <button nz-button (click)="showDrawer = false">取消</button>
+                  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+                </div>
+            </form>
+
+  </nz-drawer>
 </div>

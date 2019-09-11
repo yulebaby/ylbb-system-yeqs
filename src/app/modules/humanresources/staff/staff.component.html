@@ -49,4 +49,21 @@
       <button nz-popconfirm nzTitle="确认禁用该泳师吗?" (nzOnConfirm)="disable(data.id)" nz-button nzSize="small" nzType="danger" *ngIf="data.status != -1  && data.name != '到店安排'">禁用</button>
     </td>
   </ng-template>
+  <nz-modal
+    [(nzVisible)]="isShowTs"
+    nzTitle="提示"
+    (nzOnCancel)="isShowCancel()"
+    (nzOnOk)="showTsOk()"
+  >
+    <p>水育老师已经添加完毕，请设置水育老师排班吧</p>
+  </nz-modal>
+
+  <nz-modal
+  [(nzVisible)]="updateShow"
+  nzTitle="提示"
+  (nzOnCancel)="updateTs()"
+  (nzOnOk)="updateTs()"
+>
+  <p>水育老师在职人数已变更，请重新设置水育老师排班，如修改内容与水育师人数无关，请忽略提示</p>
+</nz-modal>
 </div>

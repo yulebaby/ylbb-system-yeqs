@@ -70,8 +70,28 @@ export class UpdateComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/employee/saveEmployee') save: () => void;
+  // @DrawerSave('/employee/saveEmployee') save: () => void;
 
+  save(){
+    if (this.formGroup.invalid) {
+      for (let i in this.formGroup.controls) {
+        this.formGroup.controls[i].markAsDirty();
+        this.formGroup.controls[i].updateValueAndValidity();
+      }
+    } else {
+      this.saveLoading = true;
+      let params = this.formGroup.value;
+      this.http.post('/employee/saveEmployee', { paramJson: JSON.stringify(params) }, true).then(res => {
+      if(params.state == '离职'){
+        this.drawerRef.close('4');
+      }else{
+        this.drawerRef.close('1');
+      }
+        
+      })
+    }
+  }
+  
   @DrawerClose() close: () => void;
 
   /* ------------ 禁止选择今天以后的日期 ------------ */

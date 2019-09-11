@@ -118,6 +118,7 @@ export class SettlementComponent implements OnInit {
   }
   storeId: any = "";
   loading_b: any = false;
+  loading_c = false;
   total_b: any = "";
   pageIndex_b: any = 1;
   pageSize_b: any = 10;
@@ -340,7 +341,7 @@ export class SettlementComponent implements OnInit {
         this.insetStatus = 0;
       } else if (res.code == 1012) {
         this.insetStatus = 1;
-      } else if (res.code == 1000) {
+      } else if (res.code == 1011) {
         this.insetStatus = 3;
       } else {
         this.message.create('error', res.info);
@@ -431,6 +432,7 @@ export class SettlementComponent implements OnInit {
       return false;
     }
     this.isOkLoading = true;
+
     this.http.post('/curriculum/insertMemberMsg', {
       paramJson,
       memberId: this.studentInformation.memberId,

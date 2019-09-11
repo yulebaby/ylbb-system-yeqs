@@ -1,6 +1,7 @@
 import { UploadComponent } from './upload/upload.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { NzModalService, NzMessageService, NzDrawerService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
@@ -37,14 +38,17 @@ export class StaffComponent implements OnInit {
       options: [{ name: '泳区', id: 1 }, { name: '体适能区', id: 2 }, { name: '兼顾', id: 3 }]
     }
   ]
-
+  isShowTs: boolean = false;
+  updateShow :boolean = false;
   checkedItems: number[] = [];
 
   constructor(
     private http: HttpService,
     private modal: NzModalService,
     private drawer: NzDrawerService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
+
   ) { }
 
   ngOnInit() {
@@ -66,9 +70,24 @@ export class StaffComponent implements OnInit {
       },
       nzContentParams: { staffInfo }
     });
-    drawerRef.afterClose.subscribe(res => res && this.listPage.eaTable._request());
+    drawerRef.afterClose.subscribe(res => {  
+      
+      res && this.listPage.eaTable._request();
+      if (!isUpdate && res) {
+          this.isShowTs = true;
+      }
+      if(res == 4){
+        this.updateShow = true;
+      }
+    });
   }
-
+  showTsOk(){
+    this.router.navigateByUrl('/home/appointment/scheduling');
+    this.isShowTs = false;
+  }
+  isShowCancel(){
+    this.isShowTs = false;
+  }
   update() {
     if (this.checkedItems.length) {
       this.showUpdate(true);
@@ -76,7 +95,9 @@ export class StaffComponent implements OnInit {
       this.message.warning('请选择一条数据');
     }
   }
-
+  updateTs(){
+    this.updateShow = false;
+  }
   reset() {
     if (this.checkedItems.length) {
       this.modal.confirm({
