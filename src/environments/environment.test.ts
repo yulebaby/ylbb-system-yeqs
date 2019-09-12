@@ -6,8 +6,8 @@
 export const environment = {
   production: true,
   version: '0.0.1',
-  domain: 'http://39.107.232.95:6056/new_bss',
-  //domain: 'http://192.168.1.128:8080',
+  //domain: 'http://39.107.232.95:6056/new_bss',
+  domain: 'http://192.168.1.117:8080',
   domainWs: 'ws://101.200.177.83:8008/new_bss',
   domainPay: 'https://tpay.haochengzhang.com/pay',
   domainOss: 'https://oss.haochengzhang.com',

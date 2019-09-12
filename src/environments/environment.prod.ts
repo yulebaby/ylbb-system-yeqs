@@ -7,8 +7,8 @@ export const environment = {
   production: true,
   version: '0.0.0',
   domain: 'http://terp.yuerqinshui.com',
-  domainPay: 'https://pay.beibeiyue.com/pay',
-  domainOss: 'https://oss.beibeiyue.com',
+  domainPay: 'https://pay.haochengzhang.com/pay',
+  domainOss: 'https://oss.haochengzhang.com',
   domainEs: 'https://es.haochengzhang.com'
 };
 

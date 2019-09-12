@@ -36,6 +36,8 @@
                 </h2>
                 <span class="contentI" *ngIf="item.type == 0">身高：{{ item.height }}cm  ----  体重：{{ item.weight }}kg</span>
                 <div *ngIf="item.imgUrls&&item.type == 1"><a (click)="previewUrl(item.imgUrls[0])">点击查看视频</a></div>
+                <div *ngIf="item.imgUrls&&item.type == 4"><a (click)="previewUrl('http://wx.haochengzhang.com/ylbb-activity-yeqsappErp/?memberId='+ item.memberId +'&templateId='+ item.courseFeedbackRecordId +'&isEdit=0')">点击查看月报</a></div>
+
                 <div *ngIf="item.imgUrls&&item.type == 2">
                   <ng-container *ngFor="let item of item.imgUrls">
                     <a (click)="previewUrl(item)">

@@ -20,6 +20,7 @@ export class CurrcategoryComponent implements OnInit {
   installName: any = "";
   openTit: any = "新增课程类别";
   changeId: any = 0;
+  loadings :boolean = false;
   constructor(
     private http: HttpService,
     private message: NzMessageService,
@@ -69,7 +70,10 @@ export class CurrcategoryComponent implements OnInit {
       return false;
     }
     if (this.changeId == "") {
+      this.loadings = true;
       this.http.post('/intelligent/insertLesson', { status: this.Typestatus, name: this.installName }, false).then(res => {
+      this.loadings = false;
+
         if (res.code == 1000) {
           this.message.create('success', '添加成功！');
           this.selectTypeListQuery();
@@ -80,7 +84,9 @@ export class CurrcategoryComponent implements OnInit {
         }
       });
     } else {
+      this.loadings = true;
       this.http.post('/intelligent/updateLesson', { status: this.Typestatus, name: this.installName, id: this.changeId }, false).then(res => {
+        this.loadings = false;
         if (res.code == 1000) {
           this.message.create('success', '修改成功！');
           this.selectTypeListQuery();

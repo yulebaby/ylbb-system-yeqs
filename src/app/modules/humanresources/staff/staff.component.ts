@@ -76,13 +76,15 @@ export class StaffComponent implements OnInit {
       if (!isUpdate && res) {
           this.isShowTs = true;
       }
-      if(res == 4){
+      if(isUpdate && res){
         this.updateShow = true;
       }
     });
   }
   showTsOk(){
-    this.router.navigateByUrl('/home/appointment/scheduling');
+    setTimeout(() => {
+      this.router.navigateByUrl('/home/appointment/scheduling');
+    }, 300);
     this.isShowTs = false;
   }
   isShowCancel(){
@@ -97,6 +99,11 @@ export class StaffComponent implements OnInit {
   }
   updateTs(){
     this.updateShow = false;
+    setTimeout(() => {
+      this.router.navigateByUrl('/home/appointment/scheduling');
+    }, 300);
+
+
   }
   reset() {
     if (this.checkedItems.length) {

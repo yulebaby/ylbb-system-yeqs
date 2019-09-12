@@ -131,7 +131,7 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>客户来源</nz-form-label>
+        <nz-form-label nzRequired>客户来源</nz-form-label>
         <nz-form-control>
           <nz-select  formControlName="customerSourceId" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
             <nz-option *ngFor="let item of sourceList" [(nzLabel)]="item.sourceName" [(nzValue)]="item.sourceId"></nz-option>
