@@ -3,17 +3,25 @@
 // The list of file replacements can be found in `angular.json`.
 
 
+// export const environment = {
+//   production: true,
+//   version: '0.0.1',
+//   domain: 'http://39.107.232.95:6056/new_bss',
+//   //domain: 'http://192.168.1.117:8080',
+//   domainWs: 'ws://101.200.177.83:8008/new_bss',
+//   domainPay: 'https://tpay.haochengzhang.com/pay',
+//   domainOss: 'https://oss.haochengzhang.com',
+//   domainEs: 'http://testes.haochengzhang.com'
+// };
+
 export const environment = {
   production: true,
-  version: '0.0.1',
-  //domain: 'http://39.107.232.95:6056/new_bss',
-  domain: 'http://192.168.1.117:8080',
-  domainWs: 'ws://101.200.177.83:8008/new_bss',
-  domainPay: 'https://tpay.haochengzhang.com/pay',
+  version: '0.0.0',
+  domain: 'http://terp.yuerqinshui.com',
+  domainPay: 'https://pay.haochengzhang.com/pay',
   domainOss: 'https://oss.haochengzhang.com',
-  domainEs: 'http://testes.haochengzhang.com'
+  domainEs: 'https://es.haochengzhang.com'
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

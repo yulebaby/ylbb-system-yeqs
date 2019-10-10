@@ -1,39 +1,38 @@
-<div class="login-container">
+<div [ngClass]="['login-container', (hostname || 'erp')]">
 
   <div class="box">
     <div class="login-ico">
       <img src="./assets/images/login/login-ico.png" alt="ico">
     </div>
-    <div class="login-logo">
-      <img src="./assets/images/login/login-logo.png" alt="logo">
+    <div class="login-logo" *ngIf="hostname && hostname == 'paopaopool'">
+      <img [src]="'./assets/images/login/login-logo-footer-'+ hostname +'.png'">
+    </div>
+    <div class="login-logo" *ngIf="!hostname || hostname != 'paopaopool'">
+      <img [src]="'./assets/images/login/login-logo.png'">
     </div>
   </div>
 
   <div class="form">
     <div class="cell">
-      <div class="login-title">
-        <img src="./assets/images/login/login-title.png" alt="亲水">
+      <div class="login-title" *ngIf="hostname">
+        <img [src]="'./assets/images/login/login-title-'+ hostname +'.png'">
       </div>
 
       <form nz-form [formGroup]="loginForm" class="content" (ngSubmit)="_submit()">
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-user" nzSize="large">
+            <nz-input-group nzPrefixIcon="user" nzSize="large">
               <input type="text" nz-input formControlName="username" placeholder="请输入用户名">
             </nz-input-group>
-            <nz-form-explain
-              *ngIf="loginForm.controls['username'].dirty && loginForm.controls['username'].hasError('required')">
-              请输入用户名!</nz-form-explain>
+            <nz-form-explain *ngIf="loginForm.controls['username'].dirty && loginForm.controls['username'].hasError('required')">请输入用户名!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-lock" nzSize="large">
+            <nz-input-group nzPrefixIcon="lock" nzSize="large">
               <input type="password" nz-input formControlName="password" placeholder="请输入密码">
             </nz-input-group>
-            <nz-form-explain
-              *ngIf="loginForm.controls['password'].dirty && loginForm.controls['password'].hasError('required')">请输入密码!
-            </nz-form-explain>
+            <nz-form-explain *ngIf="loginForm.controls['password'].dirty && loginForm.controls['password'].hasError('required')">请输入密码!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -46,21 +45,13 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-control nzSize="large">
-            <button nz-button class="login-form-button" [nzType]="'primary'"
-              [nzLoading]="loginLoading">{{ loginLoading ? '登录中...' : '登录' }}</button>
+            <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loginLoading">{{ loginLoading
+              ? '登录中...' : '登录' }}</button>
           </nz-form-control>
         </nz-form-item>
         <div class="login-error">{{ loginError }}</div>
       </form>
 
-    </div>
-
-    <div class="footer">
-      <div>
-        <!-- <a href="http://www.yulebaby.com"><span><i class="anticon anticon-ie"></i></span>官方网站</a>
-        <a href="tencent://message/?uin=541995701&Site=http://vps.shuidazhe.com&Menu=yes"><span><i class="anticon anticon-message"></i></span>技术支持</a> -->
-      </div>
-      <p>© www.yuerqinshui.com 版权所有 ICP证：京ICP备18039345号</p>
     </div>
   </div>
 

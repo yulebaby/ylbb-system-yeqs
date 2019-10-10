@@ -16,7 +16,8 @@ export class VisitComponent implements OnInit {
   @Input() status: number;
 
   @Input() followStageId: number;
-
+  pageNum: number;
+  totalPage: number;
   dataSet: any[] = [];
 
   constructor(
@@ -26,12 +27,21 @@ export class VisitComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.http.post('/retrunVisit/todayReturnVisit', { status: this.status }).then(res => this.dataSet = res.result);
+    this.query();
   }
-
+  query(){
+    this.http.post('/retrunVisit/todayReturnVisit', { status: this.status,pageSize:10000, pageNum:1 }).then(res => {
+      this.dataSet = res.result.list;
+      this.totalPage = res.result.totalPage;
+    });
+  }
+  loadData(pi: number): void {
+    this.pageNum = pi;
+    this.query();
+  }
   preview(id) {
     const drawer = this.drawer.create({
-      nzWidth: 860,
+      nzWidth: 960,
       nzContent: PreviewComponent,
       nzClosable: false,
       nzContentParams: { id, followStageId: this.followStageId }

@@ -88,9 +88,11 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this._request();
+    
   }
 
   _request(isReset?: boolean): void {
+    
     if (this._pageInfo.loading || !this.url) { return; }
     this._pageInfo.loading = true;
     let params = Object.assign({ paramJson: JSON.stringify(Object.assign(JSON.parse(JSON.stringify(this.paramsDefault)), this._params, this.paramsInit)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: !this.nopaging ? this._pageInfo.pageSize : 1000 });
@@ -101,7 +103,7 @@ export class TableComponent implements OnInit {
     }).subscribe(res => {
       this._pageInfo.loading = false;
       if (res.code == 1000) {
-        this.dataSet = res.result.list || res.result;
+        this.dataSet = res.result.potentialCustomerVOS ||res.result.list || res.result;
         !res.result.list && (this.showPage = false);
         this._pageInfo.pageNum = res.result.pageNum;
         this._pageInfo.totalPage = res.result.totalPage;

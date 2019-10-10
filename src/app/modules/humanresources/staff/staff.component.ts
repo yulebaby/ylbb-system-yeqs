@@ -160,7 +160,9 @@ export class StaffComponent implements OnInit {
   disable(id) {
     this.http.post('/employee/disableEmployee', { id }).then(res => this.listPage.eaTable._request())
   }
-
+  updateClose(){
+    this.updateShow = false;
+  }
   enable(id) {
     this.http.post('/employee/enableEmployee', { id }).then(res => this.listPage.eaTable._request())
   }

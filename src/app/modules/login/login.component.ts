@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginLoading: boolean;
 
   loginError: string = '';
-
+  hostname: string = window.location.hostname.split('.')[1];
   private baseRouter: RouterState;
 
 
