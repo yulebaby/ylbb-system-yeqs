@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     /* -------- 更改浏览器 Title 及关闭页面 Modal/Drawer 等弹出层 -------- */
-    window.document.title = '亲水ERP-登录';
+    window.document.title = '泡泡塘ERP-登录';
     this.modal.closeAll();
 
     /* ------------------- 判断本地是否存储用户名密码 ------------------- */

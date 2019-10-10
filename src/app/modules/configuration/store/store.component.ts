@@ -73,7 +73,7 @@ export class StoreComponent implements OnInit, OnDestroy {
 
     
         this.formModel.patchValue(res.result);
-        this.formModel.patchValue({ brandName: '鱼儿亲水' });
+        this.formModel.patchValue({ brandName: '泡泡塘' });
         this._mapMarkerInit();
       }
     });
