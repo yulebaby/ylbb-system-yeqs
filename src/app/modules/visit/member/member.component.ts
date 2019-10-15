@@ -71,13 +71,7 @@ export class MemberComponent implements OnInit {
       valueKey    : ['lastFollowTimeStart', 'lastFollowTimeEnd'],
       isHide      : true
     },
-    {
-      label       : '收集者',
-      key         : 'collectorId',
-      type        : 'select',
-      optionsUrl  : '/common/collectorList',
-      isHide      : true
-    },
+
     {
       label       : '推荐人',
       key         : 'recommendedId',

@@ -69,7 +69,8 @@ export class AdjustmentComponent implements OnInit {
 
   }
   currentPageDataChange($event: Array<{ name: string; age: number; address: string; checked: boolean; disabled: boolean; }>): void {
-    this.displayData = $event;
+    console.log($event);
+    this.displayData = this.data;
     //this.refreshStatus('all','all');
   }
 
@@ -217,7 +218,6 @@ export class AdjustmentComponent implements OnInit {
     this.http.post('/curriculum/checkReserve', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         if (res.result) {
-
           this.message.create('error', '排课冲突，请调整后再试！');
           this.tcTit = "课程冲突，请调整";
           this.ctadjustmentList = res.result.list;

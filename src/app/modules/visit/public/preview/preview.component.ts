@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd';
+import { NzDrawerRef, NzDrawerService, NzMessageService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { UpdateComponent } from '../update/update.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-preview',
@@ -19,19 +20,23 @@ export class PreviewComponent implements OnInit {
   userInfo: any = {};
 
   followRecordGroup: FormGroup;
-
+  remake: string;
   followRecordList: any[] = [];
   labelList: any[] = [];
   memberStatusList: any[] = [];
   followTypeList: any[] = [];
   teacherList: any[] = [];
   swimTeacherList: any[] = [];
-
+  syllabusList: any[] = [];
+  intentionStatus: boolean = false;
+  memberStatusx: number = 0;
   constructor(
     private http: HttpService,
+    private message: NzMessageService,
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef<boolean>,
     private format: DatePipe,
+    private router: Router,
     private drawer: NzDrawerService
   ) {
     /* ------------------- 客户状态 ------------------- */
@@ -42,6 +47,8 @@ export class PreviewComponent implements OnInit {
     this.http.post('/retrunVisit/getEmployeeList', {}, false).then(res => this.teacherList = res.result);
     /* ------------------- 预约老师 ------------------- */
     this.http.post('/tongka/teacherList', {}, false).then(res => this.swimTeacherList = res.result);
+    /* ------------------- 课程列表 ------------------- */
+    this.http.post('/scheduling/selectSyllabusAll', {}, false).then(res => this.syllabusList = res.result.list);
   }
 
   ngOnInit() {
@@ -52,18 +59,22 @@ export class PreviewComponent implements OnInit {
       staffId: [, [Validators.required]],
       memberStatusId: [, this.followStageId == 4 ? [] : [Validators.required]],
       nextFollowTime: [, [Validators.required]],
-      status: [false]
+      status: [false],
+      syllabusName: [, this.memberStatusx != 5 ? [] : [Validators.required]]
     });
-    this.followRecordGroup.controls['status'].valueChanges.subscribe(res => {
-      if (res) {
-        this.followRecordGroup.addControl('reserveDate', this.fb.control(this.updateRecordInfo.reserveDate || null, [Validators.required]));
-        this.followRecordGroup.addControl('reserveHour', this.fb.control(this.updateRecordInfo.reserveHour || null, [Validators.required]));
-        this.followRecordGroup.addControl('swimTeacherId', this.fb.control(this.updateRecordInfo.swimTeacherId || null, [Validators.required]));
-      } else {
-        this.followRecordGroup.removeControl('reserveDate');
-        this.followRecordGroup.removeControl('reserveHour');
-        this.followRecordGroup.removeControl('swimTeacherId');
-      }
+    // this.followRecordGroup.controls['status'].valueChanges.subscribe(res => {
+    //   if (res) {
+    //     this.followRecordGroup.addControl('reserveDate', this.fb.control(this.updateRecordInfo.reserveDate || null, [Validators.required]));
+    //     this.followRecordGroup.addControl('reserveHour', this.fb.control(this.updateRecordInfo.reserveHour || null, [Validators.required]));
+    //     this.followRecordGroup.addControl('swimTeacherId', this.fb.control(this.updateRecordInfo.swimTeacherId || null, [Validators.required]));
+    //   } else {
+    //     this.followRecordGroup.removeControl('reserveDate');
+    //     this.followRecordGroup.removeControl('reserveHour');
+    //     this.followRecordGroup.removeControl('swimTeacherId');
+    //   }
+    // });
+    this.followRecordGroup.controls['memberStatusId'].valueChanges.subscribe(res => {
+      this.memberStatusx = res;
     });
     /* ------------------- 获取用户信息 ------------------- */
     this.http.post('/customer/showCustomerInfo', { id: this.id }, false).then(res => {
@@ -101,7 +112,12 @@ export class PreviewComponent implements OnInit {
 
   /* -------------------- 转为无意向客户 -------------------- */
   intentionCustomer(): void {
-    this.http.post('/retrunVisit/transitioNoIntention', { id: this.id }).then(res => {
+    if (!this.remake) {
+      this.message.create('error', '请填写移到到无意向客户原因');
+      return;
+    }
+    this.http.post('/retrunVisit/transitioNoIntention', { id: this.id, remake: this.remake }).then(res => {
+      this.remake = null;
       this.drawerRef.close(true);
     });
   }
@@ -109,6 +125,7 @@ export class PreviewComponent implements OnInit {
   /* -------------------- 发布跟进记录 -------------------- */
   saveFollowRecordLoading: boolean;
   saveFollowRecord() {
+    
     if (this.followRecordGroup.invalid) {
       Object.keys(this.followRecordGroup.controls).map(key => {
         this.followRecordGroup.controls[key].markAsDirty();
@@ -116,6 +133,7 @@ export class PreviewComponent implements OnInit {
       });
     } else {
       this.saveFollowRecordLoading = true;
+      this.userInfo.syllabusName = this.followRecordGroup.value.syllabusName;
       let params = JSON.parse(JSON.stringify(this.followRecordGroup.value));
       params.memberId = this.id;
       params.nextFollowTime = this.format.transform(params.nextFollowTime, 'yyyy-MM-dd');
@@ -127,6 +145,16 @@ export class PreviewComponent implements OnInit {
       }
       params.followStageId = this.followStageId;
       this.http.post('/retrunVisit/modifyClubFollowRecord', { paramJson: JSON.stringify(params) }).then(res => {
+        if (this.memberStatusx == 5) {
+          this.userInfo.previewStatus = true;
+          setTimeout(() => {
+            this.router.navigate(['/home/customer/settlement'], {
+              queryParams: {
+                userInfo: JSON.stringify(this.userInfo)
+              }
+            });
+          }, 300);
+        }
         this.saveFollowRecordLoading = false;
         if (this.updateRecordInfo.id) {
           this.updateRecordInfo = {};
@@ -134,6 +162,7 @@ export class PreviewComponent implements OnInit {
         }
         this.getFollowRecord();
         this.followRecordGroup.reset();
+        this.drawerRef.close(true);
       }).catch(err => this.saveFollowRecordLoading = false);
     }
   }
@@ -146,10 +175,8 @@ export class PreviewComponent implements OnInit {
     let recordInfo = JSON.parse(JSON.stringify(info));
     recordInfo.status = recordInfo.status == 1;
     //recordInfo.reserveHour = recordInfo.reserveHour.replace(/-/g,"/");
-    console.log(recordInfo.reserveHour);
     recordInfo.reserveHour = recordInfo.reserveHour ? new Date(`${recordInfo.reserveDate} ${recordInfo.reserveHour}:${recordInfo.reserveMinute}`) : '';
     recordInfo.reserveDate = new Date(recordInfo.reserveDate ? recordInfo.reserveDate : new Date());
-    console.log(recordInfo);
     this.updateRecordInfo = recordInfo;
     this.followRecordGroup.patchValue(recordInfo);
   }
