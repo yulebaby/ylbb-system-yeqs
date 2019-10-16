@@ -24,7 +24,7 @@ export function DrawerSave(requestPath) {
           paramJson: JSON.stringify(params)
         }, true).then(res => {
           this.saveLoading = false;
-          this.drawerRef.close(true);
+          this.drawerRef.close(res);
         }).catch(err => this.saveLoading = false);
       }
     }

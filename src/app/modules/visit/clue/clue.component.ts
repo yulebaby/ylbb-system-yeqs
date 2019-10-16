@@ -75,18 +75,18 @@ export class ClueComponent implements OnInit {
       valueKey: ['lastFollowTimeStart', 'lastFollowTimeEnd'],
       isHide: true
     },
-    {
-      label: '收集者',
-      key: 'collectorId',
-      type: 'select',
-      optionsUrl: '/common/collectorList',
-      isHide: true
-    },
+    
     {
       label: '推荐人',
       key: 'recommendedId',
       type: 'select',
       optionsUrl: '/common/recommenderList',
+      isHide: true
+    }, {
+      label: '跟进人',
+      key: 'collectorId',
+      type: 'select',
+      optionsUrl: '/retrunVisit/getEmployeeList',
       isHide: true
     },
   ];

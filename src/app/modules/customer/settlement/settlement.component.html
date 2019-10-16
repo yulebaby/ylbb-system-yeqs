@@ -14,7 +14,9 @@
     </span>
     <span>
       <nz-form-label>课程名称</nz-form-label>
-      <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="syllabusName">
+      <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="name" nzAllowClear [(ngModel)]="syllabusName">
+          <nz-option *ngFor="let items of conditionList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+        </nz-select>
     </span>
     <button nz-button nzType="primary" (click)="selectquery()">查询</button>
     <div>
@@ -87,6 +89,8 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="item.currentDates >= dateNowNumber">
+
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -99,6 +103,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                        </ng-container>
+                        <ng-container *ngIf="item.currentDates < dateNowNumber">
+                            <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                          <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                          <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                          <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                        </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -129,6 +140,8 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="item.currentDates >= dateNowNumber">
+
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -141,6 +154,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                        </ng-container>
+                        <ng-container *ngIf="item.currentDates < dateNowNumber">
+                            <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                          <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                          <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                          <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                        </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -171,6 +191,7 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="item.currentDates >= dateNowNumber">
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -183,6 +204,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                      </ng-container>
+                      <ng-container *ngIf="item.currentDates < dateNowNumber">
+                          <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                      </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -213,6 +241,7 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="item.currentDates >= dateNowNumber">
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -225,6 +254,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                      </ng-container>
+                      <ng-container *ngIf="item.currentDates < dateNowNumber">
+                          <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                      </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -255,6 +291,7 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="item.currentDates >= dateNowNumber">
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -267,6 +304,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                      </ng-container>
+                      <ng-container *ngIf="item.currentDates < dateNowNumber">
+                          <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                      </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -297,6 +341,7 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="item.currentDates >= dateNowNumber">
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -309,6 +354,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                      </ng-container>
+                      <ng-container *ngIf="item.currentDates < dateNowNumber">
+                          <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                      </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -339,6 +391,8 @@
                           </span>
                         </ng-container>
                       </ng-container>
+                      
+                    <ng-container *ngIf="item.currentDates >= dateNowNumber">
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
@@ -351,6 +405,13 @@
                       <span
                         [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
                         *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                      </ng-container>
+                      <ng-container *ngIf="item.currentDates < dateNowNumber">
+                          <span   [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>0">+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>1" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>2" >+</span>
+                        <span     [style.background]="'#ccc'"      *ngIf="item.galleryful-item.sbnum>3">+</span>
+                      </ng-container>
                     </div>
                   </div>
                   <div class="sczt">
@@ -372,9 +433,11 @@
       (nzOnOk)="isstudentsForm()" [nzOkLoading]="isOkLoading">
       <div class="select_main">
         <div class="select_left">
+   
           <p>
-            <input nz-input placeholder="请输入搜索内容" [(ngModel)]="mobilePhone" (ngModelChange)="modelChange()">
-          </p>
+            <input nz-input placeholder="请输入搜索内容" style="width:490px" [(ngModel)]="mobilePhone" (ngModelChange)="modelChange()">
+            <button nz-button nzType="primary" (click)="insert()" style="float:right;">新增客户信息</button>
+          </p> 
           <div class="select_list">
             <div class="select_tit">客户信息</div>
             <nz-table #basicTable nzShowPagination="false" [nzData]="memberList_b" [nzLoading]="loading_b">
@@ -475,14 +538,14 @@
         </div>
         <div style="margin-top: 10px;" *ngFor="let item of studentdata.member">
           <span *ngIf="item.memberId == memberUserDetail.memberId" class="users activitys"
-            (click)="memberUserDetails(item.memberId)">{{item.memberName}}:</span>
+            (click)="memberUserDetails(item.memberId,item.remarks)">{{item.memberName}}:</span>
           <span *ngIf="item.memberId != memberUserDetail.memberId" class="users"
-            (click)="memberUserDetails(item.memberId)">{{item.memberName}}:</span>
+            (click)="memberUserDetails(item.memberId,item.remarks)">{{item.memberName}}:</span>
           <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id"
             (click)="Adjust(item.memberId,item.memberName,item,studentdata)"
             [disabled]="item.reserveStatus==4">单次调课</button>
           <button nz-button nzType="primary" nzSize="small" (click)="settlement(item)"
-            [disabled]="item.reserveStatus!=0&&item.reserveStatus!=4">{{ item.reserveStatus==0?'结算': item.reserveStatus==4 ? '补课' : '已结算' }}</button>
+            [disabled]="item.reserveStatus!=0&&item.reserveStatus!=4">{{ item.reserveStatus==0?'结算': item.reserveStatus==4 ? '补课' :  item.reserveStatus==5 ? '缺课结算' : '已结算' }}</button>
           <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id"
             (click)="memberStopcard(item.memberId)" [disabled]="item.reserveStatus==4">停卡</button>
         </div>
@@ -493,6 +556,7 @@
           <div>家长姓名：{{ memberUserDetail.parentName }}</div>
           <div>宝宝生日：{{ memberUserDetail.birthday }}</div>
           <div>客户状态：{{ memberUserDetail.havacard == 1? '会员' :'非会员' }}</div>
+          <div>备注：{{ memberUserDetail.remarks }}</div>
         </div>
 
 

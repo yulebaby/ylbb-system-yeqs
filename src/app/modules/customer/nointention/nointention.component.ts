@@ -74,13 +74,7 @@ export class NointentionComponent {
       valueKey    : ['lastFollowTimeStart', 'lastFollowTimeEnd'],
       isHide      : true
     },
-    {
-      label       : '收集者',
-      key         : 'collectorId',
-      type        : 'select',
-      optionsUrl  : '/common/collectorList',
-      isHide      : true
-    },
+ 
     {
       label       : '推荐人',
       key         : 'recommendedId',
@@ -149,8 +143,12 @@ export class NointentionComponent {
       width : '120px'
     },
     {
-      name  : '收集者',
+      name  : '跟进人',
       width : '120px'
+    },
+    {
+      name  : '备注',
+      width : '280px'
     }
   ]
 

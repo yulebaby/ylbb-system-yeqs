@@ -6,9 +6,10 @@ import { SettlementComponent } from './settlement.component';
 import { RouterModule } from '@angular/router';
 import { ConsumptionsComponents } from './consumptions/consumptions.component';
 import { UpclassComponent } from './upclass/upclass.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
-  declarations: [SettlementComponent, ConsumptionsComponents, UpclassComponent],
+  declarations: [SettlementComponent, ConsumptionsComponents, UpclassComponent , UpdateComponent],
   imports: [
     CommonModule,
     NgZorroAntdModule,
@@ -18,6 +19,6 @@ import { UpclassComponent } from './upclass/upclass.component';
       component: SettlementComponent
     }])
   ],
-  entryComponents: [ConsumptionsComponents, UpclassComponent]
+  entryComponents: [ConsumptionsComponents, UpclassComponent, UpdateComponent]
 })
 export class SettlementModule { }

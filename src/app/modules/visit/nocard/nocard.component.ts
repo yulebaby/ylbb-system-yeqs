@@ -71,10 +71,10 @@ export class NocardComponent implements OnInit {
       isHide      : true
     },
     {
-      label       : '收集者',
+      label       : '跟进人',
       key         : 'collectorId',
       type        : 'select',
-      optionsUrl  : '/common/collectorList',
+      optionsUrl  : '/retrunVisit/getEmployeeList',
       isHide      : true
     },
     {
@@ -85,7 +85,7 @@ export class NocardComponent implements OnInit {
       isHide      : true
     },
   ];
-  tableNode = ['宝宝昵称','宝宝姓名','宝宝生日','性别','月龄','家长姓名','家长电话','所属小区','体验时间','下次跟进时间','最后跟进时间','来源','客户状态','跟进阶段','收集者']
+  tableNode = ['宝宝昵称','宝宝姓名','宝宝生日','性别','月龄','家长姓名','家长电话','所属小区','体验时间','下次跟进时间','最后跟进时间','来源','客户状态','跟进阶段','跟进人']
 
   constructor(
     private drawer: NzDrawerService,

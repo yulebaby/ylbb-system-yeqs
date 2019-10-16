@@ -12,7 +12,7 @@ import { AppState } from 'src/app/core/reducers/reducers-config';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-
+import { UpdateComponent } from './update/update.component';
 
 @Component({
   selector: 'app-settlement',
@@ -26,6 +26,7 @@ export class SettlementComponent implements OnInit {
   searchSubject = new Subject();
   isBtnDisVled = true;
   modal_visit: boolean;
+  conditionList: any[] = [];
   checked1: any = false;
   checked2: any = false;
   checked3: any = false;
@@ -92,7 +93,7 @@ export class SettlementComponent implements OnInit {
   stopcardMemberdetail: any = {};
   memberdetailTk: any = {};
   memberdetailTks: any = {};
-
+  dateNowNumber: any;
   datalabelList: any = [];
   dateList: any = [];
   removeRecordData: any = {};
@@ -136,6 +137,14 @@ export class SettlementComponent implements OnInit {
     private router: Router,
     private reoute: ActivatedRoute,
   ) {
+    let datenows = new Date();
+    let y = datenows.getFullYear();
+    let m:any = datenows.getMonth()+1;
+    let d:any = datenows.getDate();
+    m = m < 10 ? '0' + m : m;
+    d = d < 10 ? '0' + d : d;
+    this.dateNowNumber = y + '' + m + '' + d;
+
     this.store.select('userInfoState').subscribe(res => { this.storeId = res.store['id']; });
     this.seletdataList();
     this.nowDate();
@@ -150,14 +159,24 @@ export class SettlementComponent implements OnInit {
       if (res.params.userInfo) {
         this.leaveUserInfo = JSON.parse(res.params.userInfo);
         this.buttonStatus = true;
-        this.studentInformation.memberId = this.leaveUserInfo.memberId;
-        this.studentInformation.name = this.leaveUserInfo.memberName;
+
+        this.syllabusName = this.leaveUserInfo.syllabusName;
+        this.studentInformation.birthday = this.leaveUserInfo.birthday;
+        this.studentInformation.memberId = this.leaveUserInfo.memberId || this.leaveUserInfo.id;
+        this.studentInformation.name = this.leaveUserInfo.memberName || this.leaveUserInfo.name;
         this.studentInformation.parentName = this.leaveUserInfo.name;
         this.studentInformation.mobilePhone = this.leaveUserInfo.mobilePhone,
         this.studentInformation.consumeRecordId = this.leaveUserInfo.id;
         this.studentInformation.nick = this.leaveUserInfo.nick;
         this.studentInformation.sex = this.leaveUserInfo.sex;
         this.studentInformation.havacard = this.leaveUserInfo.cardCode ? '会员' : '体验';
+        if(this.leaveUserInfo.previewStatus){
+          setTimeout(() => {
+            this.buttonStatus = false;
+            this.studentInformation.consumeRecordId = null;
+            this.selectquery();
+          },1000);
+        }
       }
     })
 
@@ -169,9 +188,41 @@ export class SettlementComponent implements OnInit {
     this.http.post('/intelligent/selectScour', {}, false).then(res => {
       this.dateList = res.result.list;
     });
-
+    //课程列表
+    this.http.post('/scheduling/selectCondition', {}, false).then(res => {
+      this.conditionList = res.result.list;
+    });
+   
     this.http.post('/scheduling/selectSchedulingAll', {}, false).then(res => {
       this.classRoomList = res.result.list;
+    });
+  }
+
+  insert() {
+    this.openDrawer({ title: '新建客户', component: UpdateComponent, params: { id: null } });
+  }
+  openDrawer(options) {
+    const drawer = this.drawer.create({
+      nzWidth: 720,
+      nzTitle: options.title || null,
+      nzContent: options.component,
+      nzContentParams: options.params
+    });
+    drawer.afterClose.subscribe(res => {
+      if(res && res.code == 1000){
+      this.leaveUserInfo = res.result;
+      this.studentInformation.birthday = this.leaveUserInfo.birthday;
+      this.studentInformation.memberId = this.leaveUserInfo.memberId || this.leaveUserInfo.id;
+      this.studentInformation.name = this.leaveUserInfo.memberName || this.leaveUserInfo.name;
+      this.studentInformation.parentName = this.leaveUserInfo.name;
+      this.studentInformation.mobilePhone = this.leaveUserInfo.mobilePhone,
+      this.studentInformation.consumeRecordId = this.leaveUserInfo.id;
+      this.studentInformation.nick = this.leaveUserInfo.nick;
+      this.studentInformation.sex = this.leaveUserInfo.sex;
+      this.studentInformation.havacard = this.leaveUserInfo.cardCode ? '会员' : '体验';
+      this.selectCardNum(this.leaveUserInfo.id);
+  
+    }
     });
   }
   selectquery() {
@@ -186,13 +237,14 @@ export class SettlementComponent implements OnInit {
       this.tableList = res.result;
       this.tableList.map((item, index) => {
         item.sbnum = 0;
+        item.currentDates = item.currentDate.replace(/[^0-9]/ig,"");
         item.member.map((items, indexs) => {
           if (items.expireDate) {
             let expireDatearr = items.expireDate.split('-');
             let expireDatestr = expireDatearr[0] + expireDatearr[1] + expireDatearr[2];
             this.tableList[index].member[indexs].expireDate = expireDatestr;
           }
-          if (items.reserveStatus != 2) {
+          if(items.reserveStatus != 5){
             item.sbnum++;
           }
         })
@@ -307,7 +359,7 @@ export class SettlementComponent implements OnInit {
     })
   }
 
-  memberUserDetails(memberId) {
+  memberUserDetails(memberId,remarks) {
     this.http.post('/curriculum/memberIdMsg', {
       memberId
     }, false).then(res => {
@@ -315,6 +367,7 @@ export class SettlementComponent implements OnInit {
       if (res.code == 1000) {
 
         this.memberUserDetail = res.result[0];
+        this.memberUserDetail.remarks = remarks;
       } else {
         this.message.create('error', res.info);
       }
@@ -371,7 +424,7 @@ export class SettlementComponent implements OnInit {
     this.studentdata = data;
     this.showstudentsForm = true;
     if(this.studentInformation.memberId){
-      this.selectCardNum(this.leaveUserInfo.memberId);
+      this.selectCardNum(this.leaveUserInfo.memberId || this.leaveUserInfo.id);
     }
     
   }

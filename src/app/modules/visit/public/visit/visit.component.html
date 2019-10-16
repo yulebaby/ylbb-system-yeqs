@@ -1,4 +1,4 @@
- <ea-table #table  [dataSet]="dataSet" [showPage]='false'   [thead]="['宝宝昵称', '宝宝姓名', '宝宝生日', '性别', '月龄', '家长姓名', '家长电话', '所属小区', '入库时间', '下次跟进时间', '最后跟进时间', '来源', '客户状态', '跟进阶段', '收集者']" [EaTableTbodyTr]="EaTableTbodyTr">
+ <ea-table #table  [dataSet]="dataSet" [showPage]='false'   [thead]="['宝宝昵称', '宝宝姓名', '宝宝生日', '性别', '月龄', '家长姓名', '家长电话', '所属小区', '入库时间', '下次跟进时间', '最后跟进时间', '来源', '客户状态', '跟进阶段', '跟进人']" [EaTableTbodyTr]="EaTableTbodyTr">
   <ng-template #EaTableTbodyTr let-data>
       <td>
         <a (click)="preview(data.id)">{{ data.nick }}</a>

@@ -24,7 +24,6 @@ export class ImportComponent implements OnInit {
       this.uploadResult = [];
     }
     if (e.type === 'success') {
-      this.message.create(e.file.response.code == 1000 ? 'success' : 'warning', e.file.response.info);
       if (e.file.response.code == 1000) {
         this.message.success(e.file.response.info);
       } else {

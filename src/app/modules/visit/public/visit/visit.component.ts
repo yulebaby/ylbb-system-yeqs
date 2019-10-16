@@ -46,7 +46,10 @@ export class VisitComponent implements OnInit {
       nzClosable: false,
       nzContentParams: { id, followStageId: this.followStageId }
     });
-    drawer.afterClose.subscribe(res => this.table._request());
+    drawer.afterClose.subscribe(res => {
+      this.drawerRef.close(false);
+      this.table._request();
+    });
   }
 
 }
