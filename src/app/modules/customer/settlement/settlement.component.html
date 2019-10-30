@@ -558,7 +558,10 @@
           <div>客户状态：{{ memberUserDetail.havacard == 1? '会员' :'非会员' }}</div>
           <div>备注：{{ memberUserDetail.remarks }}</div>
         </div>
-
+        <div>
+          <h3>课程锁定</h3>
+        </div>
+        <div><nz-switch (ngModelChange)="lockAppointment(studentdata.lockStatusblone,studentdata.id)" [(ngModel)]="studentdata.lockStatusblone" nzCheckedChildren="已锁定" nzUnCheckedChildren="未锁定"></nz-switch></div>
 
       </div>
     </nz-modal>
