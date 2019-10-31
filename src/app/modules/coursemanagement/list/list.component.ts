@@ -20,7 +20,7 @@ export class ListComponent implements OnInit {
   addcourseTypeId:any = '';
   addname:any = '';
   addcharging:any = '';
-  addnumber:any = '';
+  capacity:any = '';
   addlessonTypeId:any = '';
   courseId:any = '';
   removeclassContent:any = false;
@@ -145,7 +145,7 @@ export class ListComponent implements OnInit {
     this.addcourseTypeId = "";
     this.addlessonTypeId = "";
     this.addcourseStatus = 0;
-    this.addnumber = "";
+    this.capacity = "";
     this.addcharging = "";
     this.courseId = '';
     this.color = null;
@@ -163,8 +163,8 @@ export class ListComponent implements OnInit {
       this.message.create('error', '请选择课程类型！');
       return false;
     }
-    if (!this.addnumber) {
-      this.message.create('error', '请输入每课时耗卡！');
+    if (!this.capacity) {
+      this.message.create('error', '请输入课程容纳人数！');
       return false;
     }    
     if (!this.addcharging) {
@@ -186,7 +186,7 @@ export class ListComponent implements OnInit {
           courseTypeId: this.addcourseTypeId,
           lessonTypeId: this.addlessonTypeId,
           courseStatus: this.addcourseStatus,
-          number: this.addnumber,
+          capacity: this.capacity,
           charging: this.addcharging,
           colour:  this.color,
           typefaceColour: this.typefaceColour
@@ -201,7 +201,7 @@ export class ListComponent implements OnInit {
             this.addcourseTypeId = "";
             this.addlessonTypeId = "";
             this.addcourseStatus = 0;
-            this.addnumber = "";
+            this.capacity = "";
             this.addcharging = "";
             this.courseId = '';
             this.color = null;
@@ -214,7 +214,7 @@ export class ListComponent implements OnInit {
       let paramJson: any = JSON.stringify({
         lessonTypeId: this.addlessonTypeId,
         courseStatus: this.addcourseStatus,
-        number: this.addnumber,
+        capacity: this.capacity,
         id: this.courseId,
         colour:  this.color,
         typefaceColour: this.typefaceColour
@@ -229,7 +229,7 @@ export class ListComponent implements OnInit {
           this.addcourseTypeId = "";
           this.addlessonTypeId = "";
           this.addcourseStatus = 0;
-          this.addnumber = "";
+          this.capacity = "";
           this.addcharging = "";
           this.courseId = '';
           this.color = null;
@@ -251,7 +251,7 @@ export class ListComponent implements OnInit {
         this.addcourseTypeId = res.result.list.courseTypeId;
         this.addlessonTypeId = res.result.list.lessonTypeId;
         this.addcourseStatus = res.result.list.courseStatus;
-        this.addnumber = res.result.list.number;
+        this.capacity = res.result.list.capacity;
         this.addcharging = res.result.list.charging;
         this.color = res.result.list.colour;
       } else {
@@ -413,7 +413,7 @@ export class ListComponent implements OnInit {
       if (res.code == 1000) {
         this.addclassContent = true;
         this.period = res.result.list.period;
-        this.curriculum = res.result.list.curriculum;
+        this.capacity = res.result.list.capacity;
         this.content = res.result.list.content;
         this.courseVideo = res.result.list.courseVideo;
         this.modifyId = id;

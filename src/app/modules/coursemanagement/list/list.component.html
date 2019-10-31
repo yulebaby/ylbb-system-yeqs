@@ -43,7 +43,7 @@
               <th>课程类别</th>
               <th>课程类型</th>
               <th>单位</th>
-              <th>耗卡</th>
+              <th>课程容纳人数</th>
               <th>状态</th>
               <th>操作</th>
             </tr>
@@ -54,7 +54,7 @@
               <td>{{data.courseName}}</td>
               <td>{{data.lessonName}}</td>
               <td>课时</td>
-              <td>{{data.number}}</td>
+              <td>{{data.capacity}}</td>
               <td>{{data.courseStatus==0?'启用':'停用'}}</td>
               <td>
                 <a (click)="courseContent(data.id)">上课内容</a>
@@ -90,8 +90,8 @@
         </nz-select>
       </p>
       <p>
-        <nz-form-label>每课时耗卡</nz-form-label>
-        <input nz-input style="width: 200px;" type="number" placeholder="请输入" [(ngModel)]="addnumber">
+        <nz-form-label>课程容纳人数</nz-form-label>
+        <input nz-input style="width: 200px;" type="number" placeholder="请输入" [(ngModel)]="capacity">
       </p>
       <p>
         <nz-form-label>课程类型</nz-form-label>

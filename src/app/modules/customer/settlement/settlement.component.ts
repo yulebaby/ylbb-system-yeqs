@@ -404,6 +404,9 @@ export class SettlementComponent implements OnInit {
 
   //查询弹框
   showstudents(data) {
+    if(data.status == 1){
+      return ;
+    }
     if (!this.leaveUserInfo) {
       this.studentInformation = {
         name: '',
@@ -560,6 +563,7 @@ export class SettlementComponent implements OnInit {
 
   details(data) {
     this.studentdata = data;
+    data.statusblone = data.status == 0 ? false : true;
     this.showListdetail = true;
 
   }
@@ -567,6 +571,17 @@ export class SettlementComponent implements OnInit {
     this.showListdetail = false;
     this.memberUserDetail = { memberId: 0 };
     this.selectquery();
+  }
+  
+  lockAppointment(data,id){
+    this.http.post('/curriculum/updateReserveRecordScheduleStatus', { status : data ? 0 : 1 , id }, false).then(res => {
+      if (res.code == 1000) {
+        this.message.create('success', res.info);
+        this.selectquery();
+      } else {
+        this.message.create('error', res.info);
+      }
+    });
   }
 
   //延期弹框

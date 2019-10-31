@@ -18,11 +18,12 @@ export const environment = {
   production: true,
   version: '0.0.0',
   
-  //domain: 'http://192.168.1.128:8080',
+  //domain: 'http://192.168.1.33:8080',
   domain: 'http://39.107.232.95:6056/new_bss',
-  domainPay: 'https://pay.haochengzhang.com/pay',
+  domainPay: 'https://tpay.haochengzhang.com/pay',
   domainOss: 'https://oss.haochengzhang.com',
   domainEs: 'http://testes.haochengzhang.com'
+
 };
 /*
  * For easier debugging in development mode, you can import the following file
