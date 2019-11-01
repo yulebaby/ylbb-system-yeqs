@@ -14,8 +14,8 @@
 
   <div class="form">
     <div class="cell">
-      <div class="login-title" >
-        <img [src]="'./assets/images/login/login-title-paopaopool.png'">
+      <div class="login-title" *ngIf="hostname">
+        <img [src]="'./assets/images/login/login-title.png'">
       </div>
 
       <form nz-form [formGroup]="loginForm" class="content" (ngSubmit)="_submit()">

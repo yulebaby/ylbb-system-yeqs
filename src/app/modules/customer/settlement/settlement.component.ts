@@ -127,7 +127,6 @@ export class SettlementComponent implements OnInit {
   tkstartDate: string = null;
   tkendDate: string = null;
   leaveUserInfo: any;
-  insetStatustext: string;
   constructor(
 
     private http: HttpService,
@@ -308,16 +307,6 @@ export class SettlementComponent implements OnInit {
       this.nowendDate = this.endDate
     }
   };
-  lockAppointment(data,id){
-    this.http.post('/curriculum/updateReserveRecordScheduleStatus', { status : data ? 0 : 1 , id }, false).then(res => {
-      if (res.code == 1000) {
-        this.message.create('success', res.info);
-        this.selectquery();
-      } else {
-        this.message.create('error', res.info);
-      }
-    });
-  }
   showWeekFirstDay(i) {
     let that = this;
     var day3 = new Date();
@@ -407,7 +396,6 @@ export class SettlementComponent implements OnInit {
         this.insetStatus = 1;
       } else if (res.code == 1011) {
         this.insetStatus = 3;
-        this.insetStatustext  = res.info;
       } else {
         this.message.create('error', res.info);
       }
@@ -416,6 +404,9 @@ export class SettlementComponent implements OnInit {
 
   //查询弹框
   showstudents(data) {
+    if(data.status == 1){
+      return ;
+    }
     if (!this.leaveUserInfo) {
       this.studentInformation = {
         name: '',
@@ -462,7 +453,7 @@ export class SettlementComponent implements OnInit {
   isstudentsForm() {
     if (!this.studentdata.status) {
       if (this.insetStatus == 3) {
-        this.message.create('error', this.insetStatustext);
+        this.message.create('error', '同一节课不能添加同一个学员！');
       } else if (this.insetStatus == 0) {
         this.lsInstall();
 
@@ -572,6 +563,7 @@ export class SettlementComponent implements OnInit {
 
   details(data) {
     this.studentdata = data;
+    data.statusblone = data.status == 0 ? false : true;
     this.showListdetail = true;
 
   }
@@ -579,6 +571,17 @@ export class SettlementComponent implements OnInit {
     this.showListdetail = false;
     this.memberUserDetail = { memberId: 0 };
     this.selectquery();
+  }
+  
+  lockAppointment(data,id){
+    this.http.post('/curriculum/updateReserveRecordScheduleStatus', { status : data ? 0 : 1 , id }, false).then(res => {
+      if (res.code == 1000) {
+        this.message.create('success', res.info);
+        this.selectquery();
+      } else {
+        this.message.create('error', res.info);
+      }
+    });
   }
 
   //延期弹框
