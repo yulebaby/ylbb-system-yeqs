@@ -51,7 +51,7 @@ export class SettlementComponent implements OnInit {
   Saturday: any = '';
   courseNames: any = "";
   passwindow: any = false;
-
+  scrollLeft: number = 0;
   startDateList: any = '';
   endDateList: any = '';
 
@@ -401,7 +401,9 @@ export class SettlementComponent implements OnInit {
       }
     });
   }
-
+  listScroll($event){
+    this.scrollLeft = $event.target.scrollLeft;
+  }
   //查询弹框
   showstudents(data) {
     if(data.status == 1){
