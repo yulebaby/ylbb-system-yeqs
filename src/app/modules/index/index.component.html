@@ -82,10 +82,10 @@
 
     <div class="weekList">
 
-      <nz-table [nzData]="dateList" [nzShowPagination]="false">
+      <nz-table [nzData]="dateList" [nzShowPagination]="false" [nzScroll]="{ x: '2000px', y: '500px' }">
         <thead>
           <tr>
-            <th>时段</th>
+            <th nzLeft="0px">时段</th>
             <th>星期一
               <br> {{startDate}}
             </th>
@@ -111,7 +111,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of dateList">
-            <td>{{item.startTime}}-{{item.endTime}}</td>
+            <td nzLeft="0px" style="background:#fff;">{{item.startTime}}-{{item.endTime}}</td>
             <td>
               <ng-container *ngFor="let data of startDateList">
                 <div class="dataList" [style.background]="data.typefaceColour"
