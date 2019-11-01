@@ -27,7 +27,7 @@
   </nz-form-item>
 
 
-  <div class="listTable">
+  <div class="listTable" (scroll)="listScroll($event)">
     <div class="tableMain">
       <div class="listHeader">
         <div class="headerDate">
@@ -67,7 +67,7 @@
 
       <div class="table_smain">
         <div class="list_sy" id="slist" *ngFor="let data of dateList">
-          <div class="stime">{{data.startTime}} - {{data.endTime}}</div>
+          <div class="stime" [ngStyle]="{'left': scrollLeft+ 'px'}">{{data.startTime}} - {{data.endTime}}</div>
           <!-- 星期一 -->
           <div class="slist">
             <ng-container *ngFor="let item of startDateList">
