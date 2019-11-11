@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   version: '0.0.1',
-  //domain: 'http://192.168.1.33:8080',
+  //domain: 'http://192.168.1.56:8080/erp_controller_war/',
   domain: 'http://39.107.232.95:6056/new_bss',
   domainPay: 'https://tpay.haochengzhang.com/pay',
   domainOss: 'https://oss.haochengzhang.com',
-  domainEs: 'http://testes.haochengzhang.com'
+  domainEs: 'http://testes.haochengzhang.com',
 
   // domain: 'http://terp.yuerqinshui.com',
   // domainPay: 'https://pay.haochengzhang.com/pay',

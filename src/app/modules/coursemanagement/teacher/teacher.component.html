@@ -17,29 +17,29 @@
           <button nz-button nzType="dashed">{{startDate}}——{{endDate}}</button>
         </div>
         <div class="List_table">
-          <nz-table #basicTable [nzData]="formList" nzShowPagination='false'>
+          <nz-table #basicTable [nzData]="formList" nzShowPagination='false'  [nzScroll]="{  y: '600px' }">
             <thead>
               <tr>
-                <th>时段</th>
-                <th>星期一
+                <th nzWidth="200px">时段</th>
+                <th nzWidth="200px">星期一
                   <br> {{startDate}}
                 </th>
-                <th>星期二
+                <th nzWidth="200px">星期二
                   <br> {{Tuesday}}
                 </th>
-                <th>星期三
+                <th nzWidth="200px">星期三
                   <br> {{Wednesday}}
                 </th>
-                <th>星期四
+                <th nzWidth="200px">星期四
                   <br> {{Thursday}}
                 </th>
-                <th>星期五
+                <th nzWidth="200px">星期五
                   <br> {{Friday}}
                 </th>
-                <th>星期六
+                <th nzWidth="200px">星期六
                   <br> {{Saturday}}
                 </th>
-                <th>星期日
+                <th nzWidth="200px">星期日
                   <br> {{endDate}}
                 </th>
               </tr>
@@ -134,29 +134,29 @@
           <button nz-button nzType="dashed">{{startDate}}——{{endDate}}</button>
         </div>
         <div class="List_table" *ngIf="!tabv">
-          <nz-table #basicTable [nzData]="currformList" nzShowPagination='false'>
+          <nz-table #basicTable [nzData]="currformList" nzShowPagination='false' [nzScroll]="{  y: '600px' }">
             <thead>
               <tr>
-                <th>时段</th>
-                <th>星期一
+                <th nzWidth="200px">时段</th>
+                <th nzWidth="200px">星期一
                   <br> {{startDate}}
                 </th>
-                <th>星期二
+                <th nzWidth="200px">星期二
                   <br> {{Tuesday}}
                 </th>
-                <th>星期三
+                <th nzWidth="200px">星期三
                   <br> {{Wednesday}}
                 </th>
-                <th>星期四
+                <th nzWidth="200px">星期四
                   <br> {{Thursday}}
                 </th>
-                <th>星期五
+                <th nzWidth="200px">星期五
                   <br> {{Friday}}
                 </th>
-                <th>星期六
+                <th nzWidth="200px">星期六
                   <br> {{Saturday}}
                 </th>
-                <th>星期日
+                <th nzWidth="200px">星期日
                   <br> {{endDate}}
                 </th>
               </tr>

@@ -326,6 +326,7 @@ export class ListComponent implements OnInit {
               this.radioValue = '';
               this.RecordList = [];
               this.datalabelList = [];
+              this.showAdjust = false;
             } else {
               this.isrepeat = false;
               this.showAdjust = false;

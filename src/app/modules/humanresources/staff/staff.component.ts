@@ -17,7 +17,7 @@ export class StaffComponent implements OnInit {
   queryNode: QueryNode[] = [
     {
       label: '员工姓名',
-      key: 'name',
+      key: 'employeeName',
       type: 'input'
     },
     {

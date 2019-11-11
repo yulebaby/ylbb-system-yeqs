@@ -43,29 +43,29 @@
         <button nz-button nzType="default" (click)="export(1)">导出</button>
         <div class="weekList">
                 
-                <nz-table #basicTable [nzData]="dateList" [nzShowPagination]="false">
+                <nz-table #basicTable [nzData]="dateList" [nzShowPagination]="false"  [nzScroll]="{ y: '600px' }">
                   <thead>
                       <tr>
-                        <th>时段</th>
-                        <th>星期一
+                        <th nzWidth="200px">时段</th>
+                        <th nzWidth="200px">星期一
                           <br> {{startDate}}
                         </th>
-                        <th>星期二
+                        <th nzWidth="200px">星期二
                           <br> {{Tuesday}}
                         </th>
-                        <th>星期三
+                        <th nzWidth="200px">星期三
                           <br> {{Wednesday}}
                         </th>
-                        <th>星期四
+                        <th nzWidth="200px">星期四
                           <br> {{Thursday}}
                         </th>
-                        <th>星期五
+                        <th nzWidth="200px">星期五
                           <br> {{Friday}}
                         </th>
-                        <th>星期六
+                        <th nzWidth="200px">星期六
                           <br> {{Saturday}}
                         </th>
-                        <th>星期日
+                        <th nzWidth="200px">星期日
                           <br> {{endDate}}
                         </th>
                       </tr>
@@ -74,7 +74,7 @@
                     <tr *ngFor="let data of dateList" >
                           <td>{{data.startTime}}-{{data.endTime}}</td>
                             <!-- 星期一 -->
-                            <td valign="top">
+                            <td valign="top" >
                               <ng-container *ngFor="let item of startDateList">
                                 <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour">
                                   {{item.name}}
@@ -89,7 +89,9 @@
                                     </ng-container>
                                   </div>
                                 </div>
+                             
                               </ng-container>
+                 
                             </td>
                             <!-- 星期二 -->
                             <td valign="top">

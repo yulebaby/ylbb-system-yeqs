@@ -331,7 +331,6 @@ export class ListComponent implements OnInit {
 
   closeAdjust() {
     //this.message.create('error', '如果关闭弹窗，将不能继续排课！');
-    this.showAdjust = false;
     this.isrepeat = false;
     this.showAdjust = false;
     this.listArr = [];
@@ -385,6 +384,7 @@ export class ListComponent implements OnInit {
       this.isLoading = false;
       if (res.code == 1000) {
         this.message.create('success', '排课成功！');
+        this.showAdjust = false;
         let rows = res.result.reserveList;
         rows.sort(function(a,b){
             return Date.parse(a.currentDate) - Date.parse(b.currentDate);//时间正序

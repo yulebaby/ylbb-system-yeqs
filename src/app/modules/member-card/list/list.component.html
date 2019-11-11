@@ -101,7 +101,7 @@
 <!-- 调课弹框 -->
 <nz-modal nzWidth="95%" [(nzVisible)]="showAdjust" nzTitle="请为该学员选课" [nzFooter]="tplFooter" (nzOnCancel)="closeAdjust()">
     <p>学员姓名：{{memberData.name}}</p>
-    <p>剩余卡次：{{memberdetailTk.cardNumber}}</p>
+    <p>剩余卡次（可约课时数）：{{memberdetailTk.cardNumber}}</p>
     <div>
       <h3>请选择课程</h3>
       <nz-radio-group [(ngModel)]="radioName"  style="width: 100%;">

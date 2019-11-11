@@ -54,7 +54,7 @@
 <!-- 调课弹框 -->
 <nz-modal nzWidth="95%" [(nzVisible)]="showAdjust" nzTitle="请为该学员选课" [nzFooter]="tplFooter">
   <p>学员姓名：{{memberdetailTk.name}}</p>
-  <p>剩余卡次：{{memberdetailTk.cardNumber}}</p>
+  <p>剩余卡次（可约课时数）：{{memberdetailTk.cardNumber}}</p>
   <div>
     <h3>请选择课程</h3>
     <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)="selectlabel()" style="width: 100%;">
@@ -85,7 +85,7 @@
   <div>
     <h3 style="margin-top: 20px;">课程排期</h3>
     <nz-radio-group style="width: 100%;" [(ngModel)]="radioValue">
-      <nz-table #basicTable [nzData]="dateList" nzShowPagination='false'>
+      <nz-table #basicTable [nzData]="dateList" nzShowPagination='false' >
         <thead>
           <tr>
             <th>时段</th>

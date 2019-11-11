@@ -628,7 +628,7 @@
     <nz-modal nzWidth="95%" [(nzVisible)]="showAdjust" nzTitle="单次调课" [nzFooter]="tplFooter"
       (nzOnCancel)="closeAdjust()">
       <p>学员姓名：{{memberdetailTk.name}}</p>
-      <p>剩余卡次：{{memberdetailTk.cardNumber}}</p>
+      <p>剩余卡次（可约课时数）：{{memberdetailTk.cardNumber}}</p>
       <div>
         <h3>请选择课程</h3>
         <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)="selectlabel()" style="width: 100%;">
@@ -659,7 +659,7 @@
       <div>
         <h3 style="margin-top: 20px;">课程排期</h3>
         <nz-radio-group style="width: 100%;" [(ngModel)]="courseNames" (ngModelChange)="datalabelChange()">
-          <nz-table #basicTable [nzData]="dateList" nzShowPagination='false'>
+          <nz-table #basicTable [nzData]="dateList" nzShowPagination='false' >
             <thead>
               <tr>
                 <th>时段</th>
